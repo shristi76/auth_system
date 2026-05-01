@@ -28,6 +28,7 @@ const Register = () => {
 
   return (
     <main>
+      <h1 className='t'>Auth-System</h1>
       <div className="form-container">
         <h1>Register</h1>
 

@@ -29,6 +29,8 @@ if(loading)
 
   return (
     <main>
+             
+    <h1 className='t'>Auth-System</h1>
       <div className="form-container">
         <h1>login</h1>
         <form onSubmit={handleSubmit}>
