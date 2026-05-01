@@ -74,7 +74,7 @@ import axios from 'axios';
 //toh isko avoid krnai kai liye axios ka ek instance create kroo
 
 const api=axios.create({
-    baseURL:'http://localhost:3000',
+    baseURL:'https://auth-system-wvgc.onrender.com/',
     withCredentials:true
 })
 
