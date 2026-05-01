@@ -1,0 +1,157 @@
+1.backend develop krtai hai
+2.npm init -y
+3.npm i express mongoose dotenv
+4.create folder src
+            ->app.js
+5.in app.js
+const express =require('express');
+
+const app=express();
+app.use(express.json());
+module.exports=app;
+
+6.create server.js in root dir
+where i start the server
+
+require('dotenv').config(); //config ek method hai jiskai help sai .env kai sare variables ko acess kr sktai hai
+
+const app=require('./src/app');
+
+
+app.listen(3000,()=>{
+    console.log('server is running');
+})
+
+7.npx nodemon server.js
+8.create .env in root directory
+MONGO_URI mai database /cluster ki uri hoti hai
+
+9.mongodb config karoo
+step-1 open mongodb
+step-2 sign in karoo
+step-3 upar mai current cluster dikh raha hoga
+usmai view project pr jaa kroo new project create karoo
+name do then next -next
+step-4 now we have to create cluster (wo machine jispr hamara database chalegaa)
+free plan wala ->name the cluster->region mumbai
+step-5 we get username and password (issi ki help sai hum aapnai database sai connect kregai)
+DJJyymrkKQ9T3nam        (password)
+novifly86_db_user     (username)
+step-6 create database user pr click karoo then driver
+we get a connection string
+
+
+10.agr pop up miss hogya toh koi baat nahi
+left panel mai security mai database and network access pr jaoo
+add new databaseuser pr click karoo
+fill name,autogenerate password (phir copy kr lena)
+built in role mai atlas admin do (means user sare crud operation perform kr skta hai)
+aab user create hogya
+aab network access kai pass jaoo
+ip address list mai ek ip address hoga (iskai help sai mai apnai cluster sai connect ho sktii huu)
+yeh ip address mera current ip hotaa hai
+0.0.0.0 add karoo isskii help sai  sare ip address connect hojayega
+produnction mai aisa nahi krtai->waha pr sirf server ka ip address hota hai
+
+now ap left panel mai cluster mai jaoo then click on connect button
+compass pr jaoo
+i have mongodb compass install pr select kroo
+link milegii uskoo krna copy
+mongodb+srv://novifly86_db_user:<db_password>@clusterauth.jkisvmj.mongodb.net/
+
+aab dekhoo humai cluster sai toh connect krna hi hai pr sath mai database sai bhi krna hai
+toh last mai/ kai baad database ka naam daaloo
+mongodb+srv://novifly86_db_user:<db_password>@clusterauth.jkisvmj.mongodb.net/authDB
+
+
+<db_password> iskai jagah password paste kr doo
+
+11.aab database sai connect krna hai
+toh ek config naam ka folder bana src mai
+usmai database.js bana
+
+const mongoose =require('mongoose');
+
+//kisi bhi naam ka ek function bana
+async function connectToDB()
+{
+    try{
+        
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("connected to database");
+    }
+    catch(err){
+console.log(err);
+    }
+}
+
+
+module.exports=connectToDB;
+
+12 server.js mai connecttodb ko require kroo or then call kroo
+
+require('dotenv').config();
+
+const app=require('./src/app');
+const connecttodb=require('./src/config/database');
+connecttodb();
+app.listen(3000,()=>{
+    console.log('server is running');
+})
+
+
+13.1.model folder create kroo src mai or ismai user ka schema likhoo
+2.user.model.js file banaoo
+phir ek schema create kroo (means user table kaisa hogaa)
+3.    unique:[true,"username already exist"]
+[True,"agr unique nahi raha toh error msg jayega"]
+
+4.code of user.model.js
+const mongoose=require('mongoose');
+
+const userSchema=new mongoose.Schema({
+    username:{
+        type:String,
+        unique:[true,"username already exist"],
+        required:true,
+    },
+    email:{
+        type:String,
+        unique:[true,"email already exist"],
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    }
+});
+//ek model banaoo jismai bataoo user ka data kis table mai store ho raha hai or us table ka kya schema hona chahiya
+
+const userModel=mongoose.model('user',userSchema);
+//export the model
+module.exports=userModel;
+
+5.create api
+src mai routes folder banaoo
+create file auth.routes.js
+
+6.auth.routes mai
+const express=require('express');
+
+const authRouter=express.Router();
+
+
+module.exports=authRouter;
+
+7.app.js mai require kroo
+//prefix lagana padta hai auth ki api ko access krnai kai liye
+app.use('api/auth',authRouter)
+
+8.aab auth.routes.js mai jaa kr api create krr
+src kai ander ek controller naam ka folder banaoo
+phir uskai ander auth.controller.js file banaoo
+->controller kai ander humlog api ka logic likhtai hai
+
+9.logout kai liye we use the concept of token blacklisting
+(redis  kai sath krtai hai)
+
