@@ -1,0 +1,82 @@
+1.frontend ka alg sai folder banaoo
+2.create new terminal ,cd frontend ,npm create vite@latest .
+3.css ka file hatana src  sai kyukii humlog scss use kregai 
+4.app.jsx mai sai sab kuch hataoo
+ismai yeh daaldo
+
+
+function App() {
+  return(
+    <></>
+  )
+}
+
+export default App
+
+5.main.jsx mai sai css wala import hata doo
+6.assets folder ko bhi hataa doo
+now start developing frontend
+
+7.create a file inside src style.scss
+yeh boiler plate daaldo
+*{
+    margin:0%;
+    padding:0%;
+    box-sizing:border-box;
+
+}
+
+html,body{
+    height:100%;
+    width:100%;
+}
+
+
+8.npm i sass
+9.import kr scss ko main.jsx mai
+10.jo bhi code likhai gai wo main.jsx mai likhaigai
+11.npm i react-router
+12.ab approach yeh rahega ki humai alag alag routes create krnai hai
+/login
+/register
+
+approach ->routes wala code pura kisi alag file mai likhoo
+
+app.routes.jsx
+13.feature naam ka folder banaoo  
+approach->jo jo feature banana hai uskai naam ka folder banaoo
+like->auth,transaction etc
+14.components folder mai wo code hota hai jo repeat hoo raha hota hai
+like nav ,input
+
+15.note ->sare pages main component kai ander hi atai hai
+
+
+
+16.4 layer architecture
+
+->ui (user ko kyaa dikhaiga + user kaisai navigate krega)
+folder hota hai
+a.component
+b.pages
+
+
+
+->hook (for managing state and api layers)
+folder hota hai
+a.hooks
+
+
+->state (frontend pr data kaisai store hogaa)
+auth.context.feature
+
+
+
+->api (frontend kaisai backend sai communicate krega)
+folder hota hai
+->services
+  ->auth.api.js
+
+
+17.frontend ko agr backend sai communicate krna hota hai toh ek package ki jarurat
+padti hai->axios
